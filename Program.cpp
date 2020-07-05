@@ -2,6 +2,7 @@
 
 void RunProgram()
 {
-	SytemFile a;
-	ReadSytemFile(a);
+	UserList userlist;
+	createUserList(userlist);
+	LoadUserList(userlist);
 }

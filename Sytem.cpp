@@ -3,21 +3,43 @@
 
 using namespace std;
 
-
-void ReadSytemFile(SytemFile& file)
+void createUserList(UserList& list)
 {
-	FILE* fi=fopen("sytem.bit", "rb");
+	list.head = NULL;
+	list.num = 0;
+}
+
+void LoadUserList(UserList& list)
+{
+	FILE* fi = fopen("userlist.bit", "wb");
 	if (fi == NULL)
-	{
-		file.AmountOfUser = 0;
+		return;
+	UserNode* p;
+	p = list.head;
+	for (p=list.head;p;p=p->next){
+		fread(p, sizeof(UserData), 1, fi);
+		p = p->next;
+		list.num++;
 	}
-	fread(&file, sizeof(SytemFile), 1, fi);
 	fclose(fi);
 }
 
-void WriteSytemFile(SytemFile file)
+void AddUserNode(UserList& list, UserData x)
 {
-	FILE* fo = fopen("sytem.bit", "wb");
-	fwrite(&file, sizeof(SytemFile), 1, fo);
-	fclose(fo);
+	UserNode* newNode;
+	newNode = new UserNode;
+	newNode->data = x;
+
+	if (list.head == NULL)
+	{
+		list.head = newNode;
+		list.num++;
+		return;
+	}
+
+	UserNode* p;
+	for (p = list.head; p; p = p->next) {
+	}
+	p->next = newNode;
+	list.num++;	
 }
